@@ -1,18 +1,33 @@
+import os
 from datetime import datetime
 from flask import Flask, render_template, request, redirect, url_for, flash
 
 from logging import DEBUG
+from flask_sqlalchemy import SQLAlchemy
 
 from forms import BookmarkForm
 
+
+
+# app config
 app = Flask(__name__)
 app.logger.setLevel(DEBUG)
+#-- app.config is a dict object that holds stuff
+app.config['SECRET_KEY'] = '\xa5\xceug\xb2\xb2t\x02\x7f\xa5\x9bD\xc3e\xc1\xbcm\xf2!\x1e\xbaEN\x19'
+# 3rd slash if part of filesystem path to db
+# basedir = directory from where our app runs
+# thermos.db = file where SQL stores data
+# __file__ = current file
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'thermos.db')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+#init sqldb (constructor that returns db objects)
+#db = db connection & access to functionality of flask_sqlalchemy
+db = SQLAlchemy(app)
+
 
 # Variables
 bookmarks = []
-#-- app.config is a dict object that holds stuff
-app.config['SECRET_KEY'] = '\xa5\xceug\xb2\xb2t\x02\x7f\xa5\x9bD\xc3e\xc1\xbcm\xf2!\x1e\xbaEN\x19'
-
 
 # Functions
 def store_bookmark(url, description):
