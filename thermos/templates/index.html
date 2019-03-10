@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}
+Thermos -- Welcome
+{% endblock %}
+
+{% block content %}
+<article>
+  <header>
+    <h1>WELCOME HOMIES</h1>
+    <p>Thug life till I die...</p>
+  </header>
+  <section>
+    <h2>Recently Added Bookmarks</h2>
+    {% if new_bookmarks %}
+      <ul>
+        {% for bm in new_bookmarks %}
+          <li>{{ bm.user }} added <a href="{{ bm.url }}">{{ bm.url }}</a></li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      No bookmarks yet.
+    {% endif %}
+  </section>
+  <section>
+    <h2>Title: {{ title }}</h2>
+    <p>Text: {{ text[0] }}</p>
+    <p>Text: {{ text[1] }}</p>
+    <p>Text: {{ text[2] }}</p>
+  </section>
+  <section>
+    <h2>Examples of Thugs</h2>
+    <p>Thug 1: {{ users[0].firstname }} {{ users[0].lastname }}</p>
+    <p>Thug 2: {{ users[1].firstname }} {{ users[1].lastname }}</p>
+    <p>Thug 3: {{ users[2].firstname }} {{ users[2].lastname }}</p>
+  </section>
+  <footer>
+    <h3>Thug Initials</h3>
+    <p>Thug 1: {{ users[0].initials() }} </p>
+    <p>Thug 2: {{ users[1].initials() }} </p>
+    <p>Thug 3: {{ users[2].initials() }} </p>
+  </footer>
+</article>
+{% endblock %}
